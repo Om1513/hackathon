@@ -1,0 +1,16 @@
+
+graph TD
+  A[User] -->|sends message| B(Chat API)
+  B --> C[LangGraph Orchestrator]
+  C --> D{RAG Triggered?}
+  D -- Yes --> E[Vector Search (FAISS)]
+  E --> F[Relevant Chunks]
+  F --> G[OpenAI GPT]
+  D -- No --> G[OpenAI GPT]
+  G --> H[Response Returned]
+  B --> I[Store in Conversation DB]
+  A -->|uploads file| J(Document Upload API)
+  J --> K[Parse + Chunk]
+  K --> L[Vector Store (FAISS)]
+  A -->|creates/updates| M[CRM API]
+  M --> N[(PostgreSQL)]
